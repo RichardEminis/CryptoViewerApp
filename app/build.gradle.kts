@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

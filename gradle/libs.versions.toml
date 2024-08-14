@@ -14,6 +14,7 @@ nav = "2.7.7"
 hiltAndroidCompiler = "2.51.1"
 okhttpLogging = "4.12.0"
 ksp = "2.0.0-1.0.21"
+serializationJson = "1.7.0-RC"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -39,6 +40,7 @@ hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltA
 androidx-cardview = { group = "androidx.cardview", name = "cardview", version = "1.0.0" }
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttpLogging" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serializationJson" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
