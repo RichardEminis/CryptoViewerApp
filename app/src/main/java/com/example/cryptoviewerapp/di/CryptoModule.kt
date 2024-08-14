@@ -1,5 +1,6 @@
 package com.example.cryptoviewerapp.di
 
+import com.example.cryptoviewerapp.network.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
