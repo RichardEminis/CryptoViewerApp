@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.hiltAndroid)
 }
 
 android {
@@ -35,11 +37,20 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        compose = true
+        viewBinding = true
     }
 }
 
 dependencies {
+    implementation(libs.retrofit.kotlinx.serialization.converter)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.cardview)
+    implementation(libs.okhttp.logging.interceptor)
+    implementation(libs.retrofit)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
