@@ -1,4 +1,4 @@
-package com.example.cryptoviewerapp.ui
+package com.example.cryptoviewerapp.ui.cryptoList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
