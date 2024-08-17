@@ -4,4 +4,7 @@
     <string name="usd_txt">USD</string>
     <string name="rub_txt">RUB</string>
     <string name="icon_with_cryptocurrency">Icon with cryptocurrency</string>
+    <string name="try_text">попробовать</string>
+    <string name="some_error_text">Произошла какая-то ошибка :(</string>
+    <string name="some_error_second_text">Попробуем снова?</string>
 </resources>
