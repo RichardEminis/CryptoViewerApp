@@ -36,4 +36,30 @@
         <item name="android:textAlignment">center</item>
     </style>
 
+    <style name="CryptoTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/headline_text_size</item>
+        <item name="android:textColor">@color/crypto_text_color</item>
+    </style>
+
+    <style name="CryptoAbbreviationTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/crypto_abbreviation_text_color</item>
+    </style>
+
+    <style name="MeaningCryptoTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_semibold</item>
+        <item name="android:textSize">@dimen/headline_text_size</item>
+        <item name="android:textColor">@color/crypto_text_color</item>
+        <item name="android:fontWeight">600</item>
+    </style>
+
+    <style name="PercentTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/crypto_percent_text_color</item>
+    </style>
+
+
 </resources>

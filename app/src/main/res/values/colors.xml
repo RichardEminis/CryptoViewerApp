@@ -11,5 +11,7 @@
     <color name="uds_text_color">#FFAD25</color>
     <color name="uds_color">#1FFF9F00</color>
     <color name="rub_color">#1F000000</color>
-
+    <color name="crypto_text_color">#525252</color>
+    <color name="crypto_abbreviation_text_color">#9B9B9B</color>
+    <color name="crypto_percent_text_color">#2A9D8F</color>
 </resources>

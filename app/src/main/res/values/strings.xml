@@ -3,4 +3,5 @@
     <string name="crypto_list_text">Список криптовалют</string>
     <string name="usd_txt">USD</string>
     <string name="rub_txt">RUB</string>
+    <string name="icon_with_cryptocurrency">Icon with cryptocurrency</string>
 </resources>
