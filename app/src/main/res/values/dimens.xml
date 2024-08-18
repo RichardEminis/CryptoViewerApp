@@ -3,12 +3,12 @@
     <dimen name="main_half">8dp</dimen>
     <dimen name="main_indent">16dp</dimen>
     <dimen name="padding_bottom">10dp</dimen>
-    <dimen name="hotel_list_height">256dp</dimen>
     <dimen name="portion_indent">6dp</dimen>
     <dimen name="card_view_height">130dp</dimen>
+    <dimen name="category_start_indent">15dp</dimen>
+    <dimen name="category_end_indent">18dp</dimen>
 
     <dimen name="text_size">14sp</dimen>
     <dimen name="headline_text_size">16sp</dimen>
     <dimen name="text_headline_size">20sp</dimen>
-    <dimen name="card_view_radius">23sp</dimen>
 </resources>

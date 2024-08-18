@@ -3,7 +3,7 @@
     <string name="crypto_list_text">Список криптовалют</string>
     <string name="usd_txt">USD</string>
     <string name="rub_txt">RUB</string>
-    <string name="icon_with_cryptocurrency">Icon with cryptocurrency</string>
+    <string name="icon_with_cryptocurrency">Иконка со значком криптовалюты</string>
     <string name="try_text">попробовать</string>
     <string name="some_error_text">Произошла какая-то ошибка :(</string>
     <string name="some_error_second_text">Попробуем снова?</string>
@@ -13,4 +13,5 @@
 Bitcoin is a peer-to-peer online currency, meaning that all transactions happen directly between equal, independent network participants, without the need for any intermediary to permit or facilitate them. Bitcoin was created, according to Nakamoto’s own words, to allow “online payments to be sent directly from one party to another without going through a financial institution.”
 Bitcoin is a peer-to-peer online currency, meaning that all transactions happen directly between equal, independent network participants, without the need for any intermediary to permit or facilitate them. Bitcoin was created, according to Nakamoto’s own words, to allow “online payments to be sent directly from one party to another without going through a financial institution.”</string>
     <string name="category_text">Категории</string>
+    <string name="Icon_with_back_button">Кнопка возвращения назад</string>
 </resources>

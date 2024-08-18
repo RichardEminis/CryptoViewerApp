@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.FragmentCryptoDetailsBinding
 
@@ -26,5 +29,22 @@ class CryptoDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initUI()
+    }
+
+    private fun initUI() {
+        viewModel.cryptoDetailsUiState.observe(viewLifecycleOwner) { state ->
+
+            binding.tvDetailsToolbarTitle.text = state.detailsCryptocurrency?.name
+            binding.tvDetailsDescription.text = state.detailsCryptocurrency?.description
+            binding.tvDetailsCategory.text = state.detailsCryptocurrency?.categories.toString()
+
+            Glide.with(this)
+                .load(state.detailsCryptocurrency ?: R.drawable.btc)
+                .placeholder(R.drawable.btc)
+                .error(R.drawable.btc)
+                .into(binding.ivDetailsCryptoImage)
+        }
     }
 }

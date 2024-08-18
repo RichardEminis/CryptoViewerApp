@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CryptoDetailsUiState(
-    val hotel: CryptoCurrencyDetails? = null
+    val detailsCryptocurrency: CryptoCurrencyDetails? = null
 )
 
 @HiltViewModel
