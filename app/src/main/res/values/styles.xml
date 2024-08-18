@@ -74,4 +74,22 @@
         <item name="cornerRadius">4.45dp</item>
     </style>
 
+    <style name="DescriptionTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:textSize">@dimen/headline_text_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="DescriptionStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_headline_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="ToolBarTextStyle" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">@dimen/text_headline_size</item>
+        <item name="android:textColor">@color/toolbar_text_color</item>
+    </style>
+
 </resources>

@@ -11,11 +11,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CryptoDetailsUiState(
-    val hotel: CryptoCurrencyDetails? = null
+    val detailsCryptocurrency: CryptoCurrencyDetails? = null
 )
 
 @HiltViewModel
-class CryptoViewModel @Inject constructor(private val repository: CryptoRepository) : ViewModel() {
+class CryptoDetailsViewModel @Inject constructor(private val repository: CryptoRepository) : ViewModel() {
 
     private val _cryptoDetailsUiState = MutableLiveData(CryptoDetailsUiState())
     val cryptoDetailsUiState: LiveData<CryptoDetailsUiState>
