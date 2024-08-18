@@ -6,13 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoviewerapp.databinding.FragmentCryptoListBinding
+import com.example.cryptoviewerapp.model.CryptoCurrency
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CryptoListFragment : Fragment() {
 
+    private var recyclerView: RecyclerView? = null
     private val viewModel: CryptoViewModel by viewModels()
+    private lateinit var adapter: CryptoListAdapter
 
     private var _binding: FragmentCryptoListBinding? = null
     private val binding
@@ -29,5 +33,40 @@ class CryptoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initRecycler()
+
+        viewModel.cryptoCurrencies.observe(viewLifecycleOwner) { cryptoUiState ->
+            when {
+                cryptoUiState.cryptocurrency == null -> showErrorState()
+                cryptoUiState.cryptocurrency.isEmpty() -> showEmptyState()
+                else -> showContentState(cryptoUiState.cryptocurrency)
+            }
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+    }
+
+    private fun initRecycler() {
+        adapter = CryptoListAdapter()
+        recyclerView = binding.rvCryptoRecycler
+        recyclerView?.adapter = adapter
+    }
+
+    private fun showErrorState() {
+        binding.rvCryptoRecycler.visibility = View.GONE
+        binding.errorView.visibility = View.VISIBLE
+    }
+
+    private fun showEmptyState() {
+        binding.rvCryptoRecycler.visibility = View.GONE
+        binding.progressBar.visibility = View.VISIBLE
+    }
+
+    private fun showContentState(cryptoList: List<CryptoCurrency>) {
+        binding.rvCryptoRecycler.visibility = View.VISIBLE
+        binding.errorView.visibility = View.GONE
     }
 }

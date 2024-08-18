@@ -7,7 +7,7 @@
     tools:context=".ui.cryptoList.CryptoListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rvCryptoRecycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/white"
@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <LinearLayout
+        android:id="@+id/errorView"
         android:layout_width="230dp"
         android:layout_height="wrap_content"
         android:gravity="center"
