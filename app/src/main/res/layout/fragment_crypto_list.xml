@@ -1,0 +1,143 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.cryptoList.CryptoListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvCryptoRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:visibility="visible"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        tools:itemCount="8"
+        tools:listitem="@layout/item_crypto" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:indeterminateTint="@color/crypto_orange"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <LinearLayout
+        android:id="@+id/errorView"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="@string/icon_with_cryptocurrency"
+            app:srcCompat="@drawable/btc" />
+
+        <TextView
+            style="@style/ErrorTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/some_error_text"
+            android:visibility="visible" />
+
+        <TextView
+            style="@style/ErrorTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/some_error_second_text"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="175dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_rounded_variants"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0.05"
+            android:text="@string/try_text"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+    <android.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="117dp"
+        android:background="@color/white"
+        android:elevation="3dp"
+        android:translationZ="3dp"
+        app:contentInsetStart="@dimen/main_indent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                style="@style/HeadlineTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/main_indent"
+                android:text="@string/crypto_list_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chipGroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/main_indent"
+                app:chipSpacingHorizontal="@dimen/main_half"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
+                app:singleSelection="true">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipUsd"
+                    style="@style/UdsChipStyle"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/usd_txt" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipRub"
+                    style="@style/RubChipStyle"
+                    android:layout_width="89dp"
+                    android:layout_height="match_parent"
+                    android:text="@string/rub_txt" />
+            </com.google.android.material.chip.ChipGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </android.widget.Toolbar>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

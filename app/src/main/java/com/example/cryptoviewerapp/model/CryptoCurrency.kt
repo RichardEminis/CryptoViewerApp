@@ -9,5 +9,6 @@ data class CryptoCurrency(
     val name: String,
     val symbol: String,
     val image: String,
-    @SerialName("current_price") val currentPrice: Double
+    @SerialName("current_price") val currentPrice: Double,
+    @SerialName("ath_change_percentage") val changePercentage: Double
 )

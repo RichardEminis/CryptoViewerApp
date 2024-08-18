@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CryptoUiState(
-    val hotel: CryptoCurrency? = null
+    val cryptocurrency: List<CryptoCurrency>? = null
 )
 
 @HiltViewModel
@@ -21,13 +21,20 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     val cryptoCurrencies: LiveData<CryptoUiState>
         get() = _cryptoUiState
 
+    private val _isLoading = MutableLiveData(false)
+    val isLoading: LiveData<Boolean> = _isLoading
+
     fun getCryptoCurrencies(currency: String) {
+        _isLoading.value = true
+
         viewModelScope.launch {
             try {
                 val response = repository.getCryptoCurrencies(currency)
-                _cryptoUiState.value = cryptoCurrencies.value?.copy()
+                _cryptoUiState.value = cryptoCurrencies.value?.copy(cryptocurrency = response)
             } catch (e: Exception) {
                 _cryptoUiState.value = null
+            } finally {
+                _isLoading.value = false
             }
         }
     }
