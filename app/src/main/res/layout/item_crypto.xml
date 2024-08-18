@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/cryptoImageView"
+            android:id="@+id/ivCryptoImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginHorizontal="@dimen/main_indent"
@@ -27,31 +27,31 @@
             app:srcCompat="@drawable/btc" />
 
         <TextView
-            android:id="@+id/cryptoNameText"
+            android:id="@+id/tvCryptoName"
             style="@style/CryptoTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_half"
             android:layout_marginTop="@dimen/main_half"
-            app:layout_constraintStart_toEndOf="@+id/cryptoImageView"
+            app:layout_constraintStart_toEndOf="@+id/ivCryptoImage"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Bitcoin"
             android:includeFontPadding="false"/>
 
         <TextView
-            android:id="@+id/cryptoAbbreviationText"
+            android:id="@+id/tvCryptoAbbreviation"
             style="@style/CryptoAbbreviationTextStyle"
             android:layout_width="44dp"
             android:layout_height="16dp"
             android:layout_marginHorizontal="@dimen/main_half"
             android:layout_marginTop="3dp"
-            app:layout_constraintStart_toEndOf="@+id/cryptoImageView"
-            app:layout_constraintTop_toBottomOf="@+id/cryptoNameText"
+            app:layout_constraintStart_toEndOf="@+id/ivCryptoImage"
+            app:layout_constraintTop_toBottomOf="@+id/tvCryptoName"
             tools:text="BTC"
             android:includeFontPadding="false"/>
 
         <TextView
-            android:id="@+id/meaningText"
+            android:id="@+id/tvCryptoPrice"
             style="@style/MeaningCryptoTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,14 +63,14 @@
             android:includeFontPadding="false"/>
 
         <TextView
-            android:id="@+id/percentText"
-            style="@style/PercentTextStyle"
+            android:id="@+id/tvPercentageText"
+            style="@style/PercentageTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/main_half"
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meaningText"
+            app:layout_constraintTop_toBottomOf="@+id/tvCryptoPrice"
             tools:text="+ 4.05%"
             android:includeFontPadding="false"/>
 
