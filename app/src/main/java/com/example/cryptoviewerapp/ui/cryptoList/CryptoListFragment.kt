@@ -36,6 +36,7 @@ class CryptoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
+        initSwipeToRefresh()
 
         viewModel.cryptoCurrencies.observe(viewLifecycleOwner) { cryptoUiState ->
             when {
@@ -63,6 +64,13 @@ class CryptoListFragment : Fragment() {
         })
     }
 
+    private fun initSwipeToRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getCryptoCurrencies(viewModel.currentCurrency)
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
     private fun openCryptoById(cryptoId: String) {
         findNavController().navigate(
             CryptoListFragmentDirections.actionCryptoListFragmentToCryptoDetailsFragment(
@@ -84,5 +92,6 @@ class CryptoListFragment : Fragment() {
     private fun showContentState(cryptoList: List<CryptoCurrency>) {
         binding.rvCryptoRecycler.visibility = View.VISIBLE
         binding.errorView.visibility = View.GONE
+        adapter.dataSet = cryptoList
     }
 }

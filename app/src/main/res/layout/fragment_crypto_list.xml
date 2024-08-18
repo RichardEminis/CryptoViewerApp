@@ -6,19 +6,22 @@
     android:background="@color/white"
     tools:context=".ui.cryptoList.CryptoListFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCryptoRecycler"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="@color/white"
-        android:visibility="visible"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/details_toolbar"
-        tools:itemCount="8"
-        tools:listitem="@layout/item_crypto" />
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/details_toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCryptoRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            android:visibility="visible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="8"
+            tools:listitem="@layout/item_crypto" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -70,6 +73,7 @@
             android:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTry"
             android:layout_width="175dp"
             android:layout_height="36dp"
             android:layout_marginTop="30dp"
