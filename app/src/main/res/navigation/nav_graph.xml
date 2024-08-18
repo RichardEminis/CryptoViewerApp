@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/cryptoListFragment">
+
+    <fragment
+        android:id="@+id/cryptoListFragment"
+        android:name="com.example.cryptoviewerapp.ui.cryptoList.CryptoListFragment"
+        android:label="CryptoListFragment"
+        tools:layout="@layout/fragment_crypto_list">
+        <action
+            android:id="@+id/action_cryptoListFragment_to_cryptoDetailsFragment"
+            app:destination="@id/cryptoDetailsFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/cryptoDetailsFragment"
+        android:name="com.example.cryptoviewerapp.ui.cryptoDetails.CryptoDetailsFragment"
+        android:label="CryptoDetailFragment"
+        tools:layout="@layout/fragment_crypto_details">
+        <argument
+            android:name="cryptoId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_cryptoDetailsFragment_to_cryptoListFragment"
+            app:destination="@id/cryptoListFragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+</navigation>

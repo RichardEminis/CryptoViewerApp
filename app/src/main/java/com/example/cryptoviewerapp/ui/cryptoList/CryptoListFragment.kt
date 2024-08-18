@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoviewerapp.databinding.FragmentCryptoListBinding
 import com.example.cryptoviewerapp.model.CryptoCurrency
@@ -53,6 +54,21 @@ class CryptoListFragment : Fragment() {
         adapter = CryptoListAdapter()
         recyclerView = binding.rvCryptoRecycler
         recyclerView?.adapter = adapter
+
+        adapter.setOnItemClickListener(object :
+            CryptoListAdapter.OnItemClickListener {
+            override fun onItemClick(cryptoId: String) {
+                openCryptoById(cryptoId)
+            }
+        })
+    }
+
+    private fun openCryptoById(cryptoId: String) {
+        findNavController().navigate(
+            CryptoListFragmentDirections.actionCryptoListFragmentToCryptoDetailsFragment(
+                cryptoId
+            )
+        )
     }
 
     private fun showErrorState() {

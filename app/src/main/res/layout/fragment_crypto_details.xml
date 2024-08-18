@@ -17,7 +17,7 @@
         app:contentInsetStart="@dimen/main_indent">
 
         <ImageButton
-            android:id="@+id/back_button"
+            android:id="@+id/btnBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"

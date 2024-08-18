@@ -1,11 +1,10 @@
 package com.example.cryptoviewerapp.ui.cryptoDetails
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -45,6 +44,10 @@ class CryptoDetailsFragment : Fragment() {
                 .placeholder(R.drawable.btc)
                 .error(R.drawable.btc)
                 .into(binding.ivDetailsCryptoImage)
+
+            binding.btnBack.setOnClickListener {
+                findNavController().navigate(CryptoDetailsFragmentDirections.actionCryptoDetailsFragmentToCryptoListFragment())
+            }
         }
     }
 }

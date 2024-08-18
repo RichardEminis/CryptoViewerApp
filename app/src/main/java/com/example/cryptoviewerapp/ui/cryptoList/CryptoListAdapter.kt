@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.ItemCryptoBinding
 import com.example.cryptoviewerapp.model.CryptoCurrency
 import javax.inject.Inject
-import com.bumptech.glide.Glide
-import com.example.cryptoviewerapp.R
 
 class CryptoListAdapter @Inject constructor(
     private var itemClickListener: OnItemClickListener? = null
