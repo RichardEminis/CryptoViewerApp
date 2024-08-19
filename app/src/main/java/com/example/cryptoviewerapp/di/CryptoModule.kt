@@ -30,7 +30,7 @@ class CryptoModule {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.coingecko.com/api/v3/")
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
         return retrofit
     }
