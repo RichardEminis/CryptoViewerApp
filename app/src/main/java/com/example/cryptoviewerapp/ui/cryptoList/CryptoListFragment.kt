@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoviewerapp.databinding.FragmentCryptoListBinding
 import com.example.cryptoviewerapp.model.CryptoCurrency
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -36,6 +37,7 @@ class CryptoListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
+        initSwipeToRefresh()
 
         viewModel.cryptoCurrencies.observe(viewLifecycleOwner) { cryptoUiState ->
             when {
@@ -47,6 +49,12 @@ class CryptoListFragment : Fragment() {
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        }
+
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+            if (errorMessage != null) {
+                Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
+            }
         }
     }
 
@@ -61,6 +69,13 @@ class CryptoListFragment : Fragment() {
                 openCryptoById(cryptoId)
             }
         })
+    }
+
+    private fun initSwipeToRefresh() {
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.getCryptoCurrencies(viewModel.currentCurrency)
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun openCryptoById(cryptoId: String) {
@@ -84,5 +99,6 @@ class CryptoListFragment : Fragment() {
     private fun showContentState(cryptoList: List<CryptoCurrency>) {
         binding.rvCryptoRecycler.visibility = View.VISIBLE
         binding.errorView.visibility = View.GONE
+        adapter.dataSet = cryptoList
     }
 }
