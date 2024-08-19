@@ -24,6 +24,9 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
+
     var currentCurrency: String = "usd"
 
     fun getCryptoCurrencies(currency: String) {
@@ -35,8 +38,10 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
             try {
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value = cryptoCurrencies.value?.copy(cryptocurrency = response)
+                _error.value = null
             } catch (e: Exception) {
                 _cryptoUiState.value = null
+                _error.value = "Произошла ошибка при загрузке"
             } finally {
                 _isLoading.value = false
             }
