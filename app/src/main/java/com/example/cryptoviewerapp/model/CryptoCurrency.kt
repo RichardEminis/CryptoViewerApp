@@ -22,13 +22,9 @@ data class CryptoCurrency(
 
 @Dao
 interface CryptoCurrencyDao {
-
     @Query("SELECT * FROM cryptocurrency")
     suspend fun getAllCryptocurrencies(): List<CryptoCurrency>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(cryptocurrencies: List<CryptoCurrency>)
-
-    @Query("DELETE FROM cryptocurrency")
-    suspend fun deleteAll()
+    suspend fun insertCryptocurrencies(cryptocurrencies: List<CryptoCurrency>)
 }

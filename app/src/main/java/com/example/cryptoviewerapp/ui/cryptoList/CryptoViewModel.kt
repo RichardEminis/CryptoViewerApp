@@ -35,10 +35,16 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
 
         viewModelScope.launch {
             try {
+                val cachedCategories = repository.getCurrenciesFromCache()
+                _cryptoUiState.value =
+                    cryptoCurrencies.value?.copy(cryptocurrency = cachedCategories, error = null)
+
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value =
                     cryptoCurrencies.value?.copy(cryptocurrency = response, error = null)
                 _error.value = null
+
+                repository.saveCurrenciesToCache(response)
             } catch (e: Exception) {
                 _cryptoUiState.value = null
                 _error.value = "Произошла ошибка при загрузке"
