@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CryptoUiState(
-    val cryptocurrency: List<CryptoCurrency>? = null,
+    val cryptocurrency: List<CryptoCurrency>? = emptyList(),
+    var error: String? = null
 )
 
 @HiltViewModel
@@ -21,29 +22,26 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     val cryptoCurrencies: LiveData<CryptoUiState>
         get() = _cryptoUiState
 
-    private val _isLoading = MutableLiveData(false)
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private var _error = MutableLiveData<String?>()
+    var error: LiveData<String?> = _error
 
     var currentCurrency: String = "usd"
 
-    fun getCryptoCurrencies(currency: String) {
-        _isLoading.value = true
+    init {
+        getCryptoCurrencies(currentCurrency)
+    }
 
-        currentCurrency = currency
+    fun getCryptoCurrencies(currency: String) {
 
         viewModelScope.launch {
             try {
                 val response = repository.getCryptoCurrencies(currency)
-                _cryptoUiState.value = cryptoCurrencies.value?.copy(cryptocurrency = response)
+                _cryptoUiState.value =
+                    cryptoCurrencies.value?.copy(cryptocurrency = response, error = null)
                 _error.value = null
             } catch (e: Exception) {
                 _cryptoUiState.value = null
                 _error.value = "Произошла ошибка при загрузке"
-            } finally {
-                _isLoading.value = false
             }
         }
     }

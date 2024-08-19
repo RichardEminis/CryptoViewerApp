@@ -40,15 +40,16 @@ class CryptoListFragment : Fragment() {
         initSwipeToRefresh()
 
         viewModel.cryptoCurrencies.observe(viewLifecycleOwner) { cryptoUiState ->
+            if (cryptoUiState == null) {
+                showErrorState()
+                return@observe
+            }
+
             when {
                 cryptoUiState.cryptocurrency == null -> showErrorState()
-                cryptoUiState.cryptocurrency.isEmpty() -> showEmptyState()
+                cryptoUiState.cryptocurrency.isEmpty() -> showLoadingState()
                 else -> showContentState(cryptoUiState.cryptocurrency)
             }
-        }
-
-        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
         }
 
         viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
@@ -89,9 +90,15 @@ class CryptoListFragment : Fragment() {
     private fun showErrorState() {
         binding.rvCryptoRecycler.visibility = View.GONE
         binding.errorView.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+
+        binding.btnTry.setOnClickListener {
+            viewModel.getCryptoCurrencies(viewModel.currentCurrency)
+        }
     }
 
-    private fun showEmptyState() {
+    private fun showLoadingState() {
+        binding.errorView.visibility = View.GONE
         binding.rvCryptoRecycler.visibility = View.GONE
         binding.progressBar.visibility = View.VISIBLE
     }
@@ -99,6 +106,7 @@ class CryptoListFragment : Fragment() {
     private fun showContentState(cryptoList: List<CryptoCurrency>) {
         binding.rvCryptoRecycler.visibility = View.VISIBLE
         binding.errorView.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
         adapter.dataSet = cryptoList
     }
 }
