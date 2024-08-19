@@ -78,8 +78,9 @@
             android:layout_height="36dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/shape_rounded_variants"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:letterSpacing="0.05"
             android:text="@string/try_text"
             android:textColor="@color/white" />
@@ -88,7 +89,7 @@
 
     <android.widget.Toolbar
         android:id="@+id/details_toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="117dp"
         android:background="@color/white"
         android:elevation="3dp"
