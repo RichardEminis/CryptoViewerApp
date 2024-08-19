@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.cryptoviewerapp.model.CryptoCurrencyDao
 import com.example.cryptoviewerapp.model.CryptoCurrencyDatabase
+import com.example.cryptoviewerapp.model.CryptoDetailsDao
 import com.example.cryptoviewerapp.network.ApiService
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -33,6 +34,10 @@ class CryptoModule {
     @Provides
     fun provideCryptocurrenciesDao(appDatabase: CryptoCurrencyDatabase): CryptoCurrencyDao =
         appDatabase.cryptoCurrencyDao()
+
+    @Provides
+    fun provideCryptoDetailDao(appDatabase: CryptoCurrencyDatabase): CryptoDetailsDao =
+        appDatabase.cryptoCurrencyDetailDao()
 
     @Provides
     fun provideHttpClient(): OkHttpClient {

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.FragmentCryptoDetailsBinding
@@ -18,6 +19,7 @@ class CryptoDetailsFragment : Fragment() {
     }
 
     private val viewModel: CryptoDetailsViewModel by viewModels()
+    private val args: CryptoDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +31,9 @@ class CryptoDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val cryptoId: String = args.cryptoId
+
+        viewModel.getCryptoCurrenciesDetails(cryptoId)
         initUI()
     }
 

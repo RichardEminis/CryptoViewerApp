@@ -21,11 +21,17 @@ class CryptoDetailsViewModel @Inject constructor(private val repository: CryptoR
     val cryptoDetailsUiState: LiveData<CryptoDetailsUiState>
         get() = _cryptoDetailsUiState
 
-    fun getCryptoCurrenciesDetails(currency: String) {
+    fun getCryptoCurrenciesDetails(cryptoId: String) {
         viewModelScope.launch {
             try {
-                val response = repository.getCryptoCurrencyDetails(currency)
-                _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy()
+                val cachedCategories = repository.getCryptoByIdFromCache(cryptoId)
+                _cryptoDetailsUiState.value =
+                    cryptoDetailsUiState.value?.copy(detailsCryptocurrency = cachedCategories)
+
+                val response = repository.getCryptoCurrencyDetails(cryptoId)
+                _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy(detailsCryptocurrency = response)
+
+                repository.saveDetailsToCache(response)
             } catch (e: Exception) {
                 _cryptoDetailsUiState.value = null
             }
