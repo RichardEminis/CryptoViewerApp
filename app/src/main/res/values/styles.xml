@@ -32,7 +32,6 @@
         <item name="chipIconVisible">false</item>
         <item name="checkedIconVisible">false</item>
         <item name="closeIconVisible">false</item>
-
         <item name="android:textAlignment">center</item>
     </style>
 
