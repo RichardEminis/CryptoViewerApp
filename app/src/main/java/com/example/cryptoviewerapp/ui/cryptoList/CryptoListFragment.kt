@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.FragmentCryptoListBinding
 import com.example.cryptoviewerapp.model.CryptoCurrency
 import com.google.android.material.snackbar.Snackbar
@@ -41,6 +42,7 @@ class CryptoListFragment : Fragment() {
 
         initRecycler()
         initSwipeToRefresh()
+        initChipGroupListener()
 
         viewModel.cryptoCurrencies.observe(viewLifecycleOwner) { cryptoUiState ->
             cryptoUiState?.let {
@@ -79,6 +81,21 @@ class CryptoListFragment : Fragment() {
                 ).show()
             }
             binding.swipeRefreshLayout.isRefreshing = false
+        }
+    }
+
+    private fun initChipGroupListener() {
+        binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            when (checkedIds.firstOrNull()) {
+                R.id.chipUsd -> {
+                    viewModel.currentCurrency = "usd"
+                    viewModel.updateCache(viewModel.currentCurrency)
+                }
+                R.id.chipRub -> {
+                    viewModel.currentCurrency = "rub"
+                    viewModel.updateCache(viewModel.currentCurrency)
+                }
+            }
         }
     }
 

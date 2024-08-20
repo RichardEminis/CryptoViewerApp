@@ -24,17 +24,20 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     val cryptoCurrencies: LiveData<CryptoUiState>
         get() = _cryptoUiState
 
-    var currentCurrency: String = "usd"
+    var currentCurrency: String = "RUB"
 
     init {
         getCryptoCurrencies(currentCurrency)
     }
 
     fun getCryptoCurrencies(currency: String) {
+        Log.d("CryptoViewModel", "Currency changed to: $currency")
         _cryptoUiState.value = cryptoCurrencies.value?.copy(isLoading = true)
 
+
+
         viewModelScope.launch {
-            if (repository.getCurrenciesFromCache().isEmpty()) {
+            if (repository.getCurrenciesFromCache().isEmpty()){
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value =
                     cryptoCurrencies.value?.copy(cryptocurrency = response, isLoading = false)
@@ -42,18 +45,26 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
                 try {
                     val cachedCategories = repository.getCurrenciesFromCache()
                     _cryptoUiState.value =
-                        cryptoCurrencies.value?.copy(
-                            cryptocurrency = cachedCategories,
-                            isLoading = false
-                        )
+                        cryptoCurrencies.value?.copy(cryptocurrency = cachedCategories, isLoading = false)
 
                     repository.saveCurrenciesToCache(cachedCategories)
-                } catch (e: Exception) {
+                } catch (e:Exception){
                     Log.e(ERROR_TAG, e.toString())
                     _cryptoUiState.value =
                         cryptoCurrencies.value?.copy(isLoading = true)
                 }
             }
+        }
+    }
+
+    fun updateCache(currency: String) {
+        Log.d("CryptoViewModel", "Currency changed to: $currency")
+        _cryptoUiState.value = cryptoCurrencies.value?.copy(isLoading = true)
+
+        viewModelScope.launch {
+                val response = repository.getCryptoCurrencies(currency)
+                _cryptoUiState.value =
+                    cryptoCurrencies.value?.copy(cryptocurrency = response, isLoading = false)
         }
     }
 }
