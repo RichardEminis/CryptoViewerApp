@@ -1,5 +1,8 @@
 package com.example.cryptoviewerapp.ui.cryptoList
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -43,19 +46,13 @@ class CryptoListFragment : Fragment() {
             cryptoUiState?.let {
                 if (it.isLoading) {
                     showLoadingState()
-                } else if (it.cryptocurrency != null && it.cryptocurrency.isNotEmpty()) {
+                } else if (!it.cryptocurrency.isNullOrEmpty()) {
                     showContentState(it.cryptocurrency)
                 } else {
                     showErrorState()
                 }
             } ?: showErrorState()
         }
-
-        //viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-           // if (errorMessage != null) {
-              //  Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
-           // }
-       // }
     }
 
     private fun initRecycler() {
@@ -73,7 +70,14 @@ class CryptoListFragment : Fragment() {
 
     private fun initSwipeToRefresh() {
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.getCryptoCurrencies(viewModel.currentCurrency)
+            if (isInternetAvailable()) {
+                viewModel.getCryptoCurrencies(viewModel.currentCurrency)
+            } else {
+                Snackbar.make(binding.root,
+                    "Произошла ошибка при загрузке",
+                    Snackbar.LENGTH_LONG
+                ).show()
+            }
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -107,5 +111,13 @@ class CryptoListFragment : Fragment() {
         binding.errorView.visibility = View.GONE
         binding.progressBar.visibility = View.GONE
         adapter.dataSet = cryptoList
+    }
+
+    private fun isInternetAvailable(): Boolean {
+        val connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 }

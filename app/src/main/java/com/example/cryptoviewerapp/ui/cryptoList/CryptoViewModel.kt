@@ -37,7 +37,7 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
             if (repository.getCurrenciesFromCache().isEmpty()){
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value =
-                    cryptoCurrencies.value?.copy(cryptocurrency = response, error = "Произошла ошибка при загрузке", isLoading = false)
+                    cryptoCurrencies.value?.copy(cryptocurrency = response, error = "Интернет отсутствует", isLoading = false)
             } else {
                 try {
                     val cachedCategories = repository.getCurrenciesFromCache()
@@ -47,7 +47,7 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
                     repository.saveCurrenciesToCache(cachedCategories)
                 } catch (e:Exception){
                     _cryptoUiState.value =
-                        cryptoCurrencies.value?.copy(error = "Fatal error", isLoading = true)
+                        cryptoCurrencies.value?.copy(error = "Не удалось загрузить данные", isLoading = true)
                 }
             }
         }
