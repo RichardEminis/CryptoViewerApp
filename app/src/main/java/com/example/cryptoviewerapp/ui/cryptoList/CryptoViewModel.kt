@@ -1,5 +1,7 @@
 package com.example.cryptoviewerapp.ui.cryptoList
 
+import ERROR_TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,9 +14,7 @@ import javax.inject.Inject
 
 data class CryptoUiState(
     val cryptocurrency: List<CryptoCurrency>? = emptyList(),
-    var error: String? = null,
-    val isLoading: Boolean = false,
-    val isInternetConnected: Boolean = false
+    val isLoading: Boolean = false
 )
 
 @HiltViewModel
@@ -34,29 +34,26 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
         _cryptoUiState.value = cryptoCurrencies.value?.copy(isLoading = true)
 
         viewModelScope.launch {
-            if (repository.getCurrenciesFromCache().isEmpty()){
+            if (repository.getCurrenciesFromCache().isEmpty()) {
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value =
-                    cryptoCurrencies.value?.copy(cryptocurrency = response, error = "Интернет отсутствует", isLoading = false)
+                    cryptoCurrencies.value?.copy(cryptocurrency = response, isLoading = false)
             } else {
                 try {
                     val cachedCategories = repository.getCurrenciesFromCache()
                     _cryptoUiState.value =
-                        cryptoCurrencies.value?.copy(cryptocurrency = cachedCategories, error = null, isLoading = false)
+                        cryptoCurrencies.value?.copy(
+                            cryptocurrency = cachedCategories,
+                            isLoading = false
+                        )
 
                     repository.saveCurrenciesToCache(cachedCategories)
-                } catch (e:Exception){
+                } catch (e: Exception) {
+                    Log.e(ERROR_TAG, e.toString())
                     _cryptoUiState.value =
-                        cryptoCurrencies.value?.copy(error = "Не удалось загрузить данные", isLoading = true)
+                        cryptoCurrencies.value?.copy(isLoading = true)
                 }
             }
-        }
-    }
-
-    fun refreshCryptoData(currency: String) {
-        viewModelScope.launch {
-                val result = repository.getCryptoCurrencies(currency)
-            _cryptoUiState.value = CryptoUiState(cryptocurrency = result)
         }
     }
 }
