@@ -1,10 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.androidxNavigationSafeArgs)
+    alias(libs.plugins.kotlinSerialization)
 }
 
 android {
@@ -50,12 +50,15 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.benchmark.common)
     ksp(libs.hilt.android.compiler)
+    ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.cardview)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.retrofit)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.glide)
     implementation (libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.runtime)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

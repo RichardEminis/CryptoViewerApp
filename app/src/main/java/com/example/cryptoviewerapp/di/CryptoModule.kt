@@ -1,10 +1,17 @@
 package com.example.cryptoviewerapp.di
 
+import android.content.Context
+import androidx.room.Room
+import com.example.cryptoviewerapp.model.CryptoCurrencyDao
+import com.example.cryptoviewerapp.model.CryptoCurrencyDatabase
+import com.example.cryptoviewerapp.model.CryptoDetailsDao
 import com.example.cryptoviewerapp.network.ApiService
+import com.example.cryptoviewerapp.ulils.CRYPTO_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -15,6 +22,23 @@ import retrofit2.Retrofit
 @Module
 @InstallIn(SingletonComponent::class)
 class CryptoModule {
+
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): CryptoCurrencyDatabase =
+        Room.databaseBuilder(
+            context,
+            CryptoCurrencyDatabase::class.java, "recipes-database"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+
+    @Provides
+    fun provideCryptocurrenciesDao(appDatabase: CryptoCurrencyDatabase): CryptoCurrencyDao =
+        appDatabase.cryptoCurrencyDao()
+
+    @Provides
+    fun provideCryptoDetailDao(appDatabase: CryptoCurrencyDatabase): CryptoDetailsDao =
+        appDatabase.cryptoCurrencyDetailDao()
 
     @Provides
     fun provideHttpClient(): OkHttpClient {
@@ -28,9 +52,9 @@ class CryptoModule {
         val contentType = "application/json".toMediaType()
         val json = Json { ignoreUnknownKeys = true }
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.coingecko.com/api/v3/")
+            .baseUrl(CRYPTO_URL)
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(json.asConverterFactory(contentType))
             .build()
         return retrofit
     }
