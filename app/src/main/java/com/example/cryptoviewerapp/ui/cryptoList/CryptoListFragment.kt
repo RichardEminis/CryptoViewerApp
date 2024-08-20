@@ -91,11 +91,13 @@ class CryptoListFragment : Fragment() {
             when (checkedIds.firstOrNull()) {
                 R.id.chipUsd -> {
                     viewModel.currentCurrency = USD_CURRENCY
+                    adapter.currentCurrency = USD_CURRENCY
                     viewModel.updateCache(viewModel.currentCurrency)
                 }
 
                 R.id.chipRub -> {
                     viewModel.currentCurrency = RUB_CURRENCY
+                    adapter.currentCurrency = RUB_CURRENCY
                     viewModel.updateCache(viewModel.currentCurrency)
                 }
             }

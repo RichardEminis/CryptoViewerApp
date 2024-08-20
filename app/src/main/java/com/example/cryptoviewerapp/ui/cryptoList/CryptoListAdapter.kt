@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.ItemCryptoBinding
 import com.example.cryptoviewerapp.model.CryptoCurrency
+import com.example.cryptoviewerapp.ulils.USD_CURRENCY
 import javax.inject.Inject
 import kotlin.math.abs
 
@@ -22,6 +23,8 @@ class CryptoListAdapter @Inject constructor(
             notifyDataSetChanged()
         }
 
+    var currentCurrency: String = USD_CURRENCY
+
     interface OnItemClickListener {
         fun onItemClick(cryptoId: String)
     }
@@ -29,10 +32,12 @@ class CryptoListAdapter @Inject constructor(
     class ViewHolder(private val binding: ItemCryptoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n", "DefaultLocale")
-        fun bind(crypto: CryptoCurrency, clickListener: OnItemClickListener?) {
+        fun bind(crypto: CryptoCurrency, clickListener: OnItemClickListener?,currency: String) {
             binding.tvCryptoName.text = crypto.name
             binding.tvCryptoAbbreviation.text = crypto.symbol
-            binding.tvCryptoPrice.text = crypto.currentPrice.toString()
+
+            val currencySymbol = if (currency == USD_CURRENCY) "$" else "₽"
+            binding.tvCryptoPrice.text = "$currencySymbol ${crypto.currentPrice}"
 
             val formattedPercentage = String.format(
                 "%s %.2f%%",
@@ -70,7 +75,7 @@ class CryptoListAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val crypto = dataSet[position]
-        holder.bind(crypto, itemClickListener)
+        holder.bind(crypto, itemClickListener, currentCurrency)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
