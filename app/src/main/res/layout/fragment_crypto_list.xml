@@ -132,14 +132,16 @@
                     style="@style/UdsChipStyle"
                     android:layout_width="89dp"
                     android:layout_height="match_parent"
-                    android:text="@string/usd_txt" />
+                    android:text="@string/usd_txt"
+                    android:elevation="-3dp"/>
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipRub"
                     style="@style/RubChipStyle"
                     android:layout_width="89dp"
                     android:layout_height="match_parent"
-                    android:text="@string/rub_txt" />
+                    android:text="@string/rub_txt"
+                    android:elevation="-3dp"/>
             </com.google.android.material.chip.ChipGroup>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
