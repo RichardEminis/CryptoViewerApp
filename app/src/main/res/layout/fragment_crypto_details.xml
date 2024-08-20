@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +14,10 @@
         android:layout_height="56dp"
         android:background="@color/white"
         android:elevation="3dp"
-        app:contentInsetStart="@dimen/main_indent">
+        app:contentInsetStart="@dimen/main_indent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -37,65 +40,140 @@
 
     </android.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/details_toolbar">
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/descriptionView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:fillViewport="true"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@id/details_toolbar">
 
-            <ImageView
-                android:id="@+id/ivDetailsCryptoImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10.4dp"
-                android:contentDescription="@string/icon_with_cryptocurrency"
-                tools:src="@drawable/btc" />
-
-            <TextView
-                style="@style/DescriptionStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/main_indent"
-                android:layout_marginTop="@dimen/main_indent"
-                android:text="@string/description_text"
-                android:textSize="@dimen/text_headline_size" />
-
-            <TextView
-                android:id="@+id/tvDetailsDescription"
-                style="@style/DescriptionTextStyle"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/main_indent"
-                android:layout_marginTop="@dimen/main_half"
-                android:layout_marginEnd="@dimen/main_indent"
-                tools:text="@string/description_large_text" />
+                android:orientation="vertical">
 
-            <TextView
-                style="@style/DescriptionStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/main_indent"
-                android:layout_marginTop="@dimen/main_indent"
-                android:text="@string/category_text"
-                android:textSize="@dimen/text_headline_size" />
+                <ImageView
+                    android:id="@+id/ivDetailsCryptoImage"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10.4dp"
+                    android:contentDescription="@string/icon_with_cryptocurrency"
+                    tools:src="@drawable/btc" />
 
-            <TextView
-                android:id="@+id/tvDetailsCategory"
-                style="@style/DescriptionTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/category_start_indent"
-                android:layout_marginTop="@dimen/main_half"
-                android:layout_marginEnd="@dimen/category_end_indent"
-                    tools:text="Smart Contract Platform, Ethereum Ecosystems"
-                android:layout_marginBottom="34dp"/>
+                <TextView
+                    style="@style/DescriptionStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/main_indent"
+                    android:layout_marginTop="@dimen/main_indent"
+                    android:text="@string/description_text"
+                    android:textSize="@dimen/text_headline_size" />
 
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+                <TextView
+                    android:id="@+id/tvDetailsDescription"
+                    style="@style/DescriptionTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/main_indent"
+                    android:layout_marginTop="@dimen/main_half"
+                    android:layout_marginEnd="@dimen/main_indent"
+                    tools:text="@string/description_large_text" />
 
-</LinearLayout>
+                <TextView
+                    style="@style/DescriptionStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/main_indent"
+                    android:layout_marginTop="@dimen/main_indent"
+                    android:text="@string/category_text"
+                    android:textSize="@dimen/text_headline_size" />
+
+                <TextView
+                    android:id="@+id/tvDetailsCategory"
+                    style="@style/DescriptionTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/category_start_indent"
+                    android:layout_marginTop="@dimen/main_half"
+                    android:layout_marginEnd="@dimen/category_end_indent"
+                    android:layout_marginBottom="34dp"
+                    tools:text="Smart Contract Platform, Ethereum Ecosystems" />
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:indeterminateTint="@color/crypto_orange"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/errorView"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/details_toolbar">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:contentDescription="@string/icon_with_cryptocurrency"
+            app:srcCompat="@drawable/btc" />
+
+        <TextView
+            style="@style/ErrorTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/some_error_text"
+            android:visibility="visible" />
+
+        <TextView
+            style="@style/ErrorTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/some_error_second_text"
+            android:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTry"
+            android:layout_width="175dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/shape_rounded_variants"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:letterSpacing="0.05"
+            android:text="@string/try_text"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

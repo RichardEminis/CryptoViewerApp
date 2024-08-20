@@ -37,19 +37,12 @@ class CryptoDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val cryptoId: String = args.cryptoId
+
+        viewModel.getCryptoCurrenciesDetails(cryptoId)
 
         initUI()
         initSwipeToRefresh()
-
-        viewModel.cryptoDetailsUiState.observe(viewLifecycleOwner) { cryptoUiState ->
-            cryptoUiState?.let {
-                if (it.isLoading) {
-                    showLoadingState()
-                } else  {
-                    showContentState()
-                }
-            } ?: showErrorState()
-        }
     }
 
     private fun initUI() {
@@ -68,6 +61,16 @@ class CryptoDetailsFragment : Fragment() {
             binding.btnBack.setOnClickListener {
                 findNavController().navigate(CryptoDetailsFragmentDirections.actionCryptoDetailsFragmentToCryptoListFragment())
             }
+
+            state?.let {
+                if (it.isLoading) {
+                    showLoadingState()
+                } else if (it.detailsCryptocurrency != null) {
+                    showContentState()
+                } else if (!isInternetAvailable()){
+                    showErrorState()
+                }
+            } ?: showErrorState()
         }
     }
 
