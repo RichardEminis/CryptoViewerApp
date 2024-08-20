@@ -10,14 +10,11 @@
         <item name="android:checkable">true</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/text_size</item>
-
         <item name="chipBackgroundColor">@color/uds_color</item>
         <item name="android:textColor">@color/uds_text_color</item>
-
         <item name="chipIconVisible">false</item>
         <item name="checkedIconVisible">false</item>
         <item name="closeIconVisible">false</item>
-
         <item name="android:textAlignment">center</item>
     </style>
 
@@ -25,10 +22,8 @@
         <item name="android:checkable">true</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:textSize">@dimen/text_size</item>
-
         <item name="chipBackgroundColor">@color/rub_color</item>
         <item name="android:textColor">@color/black</item>
-
         <item name="chipIconVisible">false</item>
         <item name="checkedIconVisible">false</item>
         <item name="closeIconVisible">false</item>
