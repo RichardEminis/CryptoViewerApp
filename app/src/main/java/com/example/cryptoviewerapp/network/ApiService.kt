@@ -11,7 +11,7 @@ interface ApiService {
     @GET("coins/markets")
     suspend fun getCryptoCurrencies(
         @Query("vs_currency") currency: String,
-        @Query("per_page") perPage: Int = 20,
+        @Query("per_page") perPage: Int = 30,
     ): List<CryptoCurrency>
 
     @GET("coins/{id}")

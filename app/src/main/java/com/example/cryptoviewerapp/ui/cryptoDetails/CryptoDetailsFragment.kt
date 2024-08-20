@@ -11,7 +11,9 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.FragmentCryptoDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CryptoDetailsFragment : Fragment() {
 
     private val binding: FragmentCryptoDetailsBinding by lazy {
@@ -41,11 +43,11 @@ class CryptoDetailsFragment : Fragment() {
         viewModel.cryptoDetailsUiState.observe(viewLifecycleOwner) { state ->
 
             binding.tvDetailsToolbarTitle.text = state.detailsCryptocurrency?.name
-            binding.tvDetailsDescription.text = state.detailsCryptocurrency?.description
+            binding.tvDetailsDescription.text = state.detailsCryptocurrency?.description?.en ?: ""
             binding.tvDetailsCategory.text = state.detailsCryptocurrency?.categories.toString()
 
             Glide.with(this)
-                .load(state.detailsCryptocurrency ?: R.drawable.btc)
+                .load(state.detailsCryptocurrency?.image?.large ?: R.drawable.btc)
                 .placeholder(R.drawable.btc)
                 .error(R.drawable.btc)
                 .into(binding.ivDetailsCryptoImage)

@@ -17,7 +17,7 @@ data class CryptoCurrency(
     val symbol: String,
     val image: String,
     @SerialName("current_price") val currentPrice: Double,
-    @SerialName("ath_change_percentage") val changePercentage: Double
+    @SerialName("price_change_percentage_24h") val changePercentage: Double
 )
 
 @Dao

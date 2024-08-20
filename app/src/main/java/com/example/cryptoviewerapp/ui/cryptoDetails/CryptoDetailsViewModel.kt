@@ -15,7 +15,8 @@ data class CryptoDetailsUiState(
 )
 
 @HiltViewModel
-class CryptoDetailsViewModel @Inject constructor(private val repository: CryptoRepository) : ViewModel() {
+class CryptoDetailsViewModel @Inject constructor(private val repository: CryptoRepository) :
+    ViewModel() {
 
     private val _cryptoDetailsUiState = MutableLiveData(CryptoDetailsUiState())
     val cryptoDetailsUiState: LiveData<CryptoDetailsUiState>
@@ -23,18 +24,15 @@ class CryptoDetailsViewModel @Inject constructor(private val repository: CryptoR
 
     fun getCryptoCurrenciesDetails(cryptoId: String) {
         viewModelScope.launch {
-            try {
-                val cachedCategories = repository.getCryptoByIdFromCache(cryptoId)
-                _cryptoDetailsUiState.value =
-                    cryptoDetailsUiState.value?.copy(detailsCryptocurrency = cachedCategories)
+            val cachedCategories = repository.getCryptoByIdFromCache(cryptoId)
+            _cryptoDetailsUiState.value =
+                cryptoDetailsUiState.value?.copy(detailsCryptocurrency = cachedCategories)
 
-                val response = repository.getCryptoCurrencyDetails(cryptoId)
-                _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy(detailsCryptocurrency = response)
+            val response = repository.getCryptoCurrencyDetails(cryptoId)
+            _cryptoDetailsUiState.value =
+                cryptoDetailsUiState.value?.copy(detailsCryptocurrency = response)
 
-                repository.saveDetailsToCache(response)
-            } catch (e: Exception) {
-                _cryptoDetailsUiState.value = null
-            }
+            repository.saveDetailsToCache(response)
         }
     }
 }
