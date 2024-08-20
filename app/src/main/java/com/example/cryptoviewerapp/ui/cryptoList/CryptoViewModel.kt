@@ -12,18 +12,17 @@ import javax.inject.Inject
 
 data class CryptoUiState(
     val cryptocurrency: List<CryptoCurrency>? = emptyList(),
-    var error: String? = null
+    var error: String? = null,
+    val isLoading: Boolean = false,
+    val isInternetConnected: Boolean = false
 )
 
 @HiltViewModel
 class CryptoViewModel @Inject constructor(private val repository: CryptoRepository) : ViewModel() {
 
-    private val _cryptoUiState = MutableLiveData(CryptoUiState())
+    private val _cryptoUiState = MutableLiveData(CryptoUiState(isLoading = true))
     val cryptoCurrencies: LiveData<CryptoUiState>
         get() = _cryptoUiState
-
-    private var _error = MutableLiveData<String?>()
-    var error: LiveData<String?> = _error
 
     var currentCurrency: String = "usd"
 
@@ -32,23 +31,32 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     }
 
     fun getCryptoCurrencies(currency: String) {
+        _cryptoUiState.value = cryptoCurrencies.value?.copy(isLoading = true)
 
         viewModelScope.launch {
-            try {
-                val cachedCategories = repository.getCurrenciesFromCache()
-                _cryptoUiState.value =
-                    cryptoCurrencies.value?.copy(cryptocurrency = cachedCategories, error = null)
-
+            if (repository.getCurrenciesFromCache().isEmpty()){
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value =
-                    cryptoCurrencies.value?.copy(cryptocurrency = response, error = null)
-                _error.value = null
+                    cryptoCurrencies.value?.copy(cryptocurrency = response, error = "Произошла ошибка при загрузке", isLoading = false)
+            } else {
+                try {
+                    val cachedCategories = repository.getCurrenciesFromCache()
+                    _cryptoUiState.value =
+                        cryptoCurrencies.value?.copy(cryptocurrency = cachedCategories, error = null, isLoading = false)
 
-                repository.saveCurrenciesToCache(response)
-            } catch (e: Exception) {
-                _cryptoUiState.value = null
-                _error.value = "Произошла ошибка при загрузке"
+                    repository.saveCurrenciesToCache(cachedCategories)
+                } catch (e:Exception){
+                    _cryptoUiState.value =
+                        cryptoCurrencies.value?.copy(error = "Fatal error", isLoading = true)
+                }
             }
+        }
+    }
+
+    fun refreshCryptoData(currency: String) {
+        viewModelScope.launch {
+                val result = repository.getCryptoCurrencies(currency)
+            _cryptoUiState.value = CryptoUiState(cryptocurrency = result)
         }
     }
 }

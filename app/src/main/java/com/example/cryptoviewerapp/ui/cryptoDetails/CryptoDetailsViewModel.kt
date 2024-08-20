@@ -11,7 +11,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class CryptoDetailsUiState(
-    val detailsCryptocurrency: CryptoCurrencyDetails? = null
+    val detailsCryptocurrency: CryptoCurrencyDetails? = null,
+    var error: String? = null,
+    val isLoading: Boolean = false,
+    val isInternetConnected: Boolean = false
 )
 
 @HiltViewModel
@@ -23,16 +26,31 @@ class CryptoDetailsViewModel @Inject constructor(private val repository: CryptoR
         get() = _cryptoDetailsUiState
 
     fun getCryptoCurrenciesDetails(cryptoId: String) {
+        _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy(isLoading = true)
+
         viewModelScope.launch {
-            val cachedCategories = repository.getCryptoByIdFromCache(cryptoId)
-            _cryptoDetailsUiState.value =
-                cryptoDetailsUiState.value?.copy(detailsCryptocurrency = cachedCategories)
-
-            val response = repository.getCryptoCurrencyDetails(cryptoId)
-            _cryptoDetailsUiState.value =
-                cryptoDetailsUiState.value?.copy(detailsCryptocurrency = response)
-
-            repository.saveDetailsToCache(response)
+            if (repository.getCryptoByIdFromCache(cryptoId) != null) {
+                val cachedDetails = repository.getCryptoByIdFromCache(cryptoId)
+                _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy(
+                    detailsCryptocurrency = cachedDetails,
+                    isLoading = true,
+                    error = "Произошла ошибка при загрузке данных"
+                )
+            } else {
+                try {
+                    val response = repository.getCryptoCurrencyDetails(cryptoId)
+                    _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy(
+                        detailsCryptocurrency = response,
+                        isLoading = true
+                    )
+                    repository.saveDetailsToCache(response)
+                } catch (e: Exception) {
+                    _cryptoDetailsUiState.value = cryptoDetailsUiState.value?.copy(
+                        error = "Fatal error",
+                        isLoading = false
+                    )
+                }
+            }
         }
     }
 }

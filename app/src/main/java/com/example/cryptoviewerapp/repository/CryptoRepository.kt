@@ -42,10 +42,15 @@ class CryptoRepository @Inject constructor(
         }
     }
 
-
     suspend fun getCryptoCurrencies(currency: String): List<CryptoCurrency> {
         return withContext(ioDispatcher) {
-            apiService.getCryptoCurrencies(currency)
+            try {
+                val apiResult = apiService.getCryptoCurrencies(currency)
+                cryptoCurrencyDao.insertCryptocurrencies(apiResult)
+                apiResult
+            } catch (e: Exception) {
+                cryptoCurrencyDao.getAllCryptocurrencies()
+            }
         }
     }
 

@@ -40,23 +40,22 @@ class CryptoListFragment : Fragment() {
         initSwipeToRefresh()
 
         viewModel.cryptoCurrencies.observe(viewLifecycleOwner) { cryptoUiState ->
-            if (cryptoUiState == null) {
-                showErrorState()
-                return@observe
-            }
-
-            when {
-                cryptoUiState.cryptocurrency == null -> showErrorState()
-                cryptoUiState.cryptocurrency.isEmpty() -> showLoadingState()
-                else -> showContentState(cryptoUiState.cryptocurrency)
-            }
+            cryptoUiState?.let {
+                if (it.isLoading) {
+                    showLoadingState()
+                } else if (it.cryptocurrency != null && it.cryptocurrency.isNotEmpty()) {
+                    showContentState(it.cryptocurrency)
+                } else {
+                    showErrorState()
+                }
+            } ?: showErrorState()
         }
 
-        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
-            if (errorMessage != null) {
-                Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
-            }
-        }
+        //viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
+           // if (errorMessage != null) {
+              //  Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_LONG).show()
+           // }
+       // }
     }
 
     private fun initRecycler() {
