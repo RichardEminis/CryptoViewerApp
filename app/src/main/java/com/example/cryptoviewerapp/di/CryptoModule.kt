@@ -6,6 +6,7 @@ import com.example.cryptoviewerapp.model.CryptoCurrencyDao
 import com.example.cryptoviewerapp.model.CryptoCurrencyDatabase
 import com.example.cryptoviewerapp.model.CryptoDetailsDao
 import com.example.cryptoviewerapp.network.ApiService
+import com.example.cryptoviewerapp.ulils.CRYPTO_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -51,7 +52,7 @@ class CryptoModule {
         val contentType = "application/json".toMediaType()
         val json = Json { ignoreUnknownKeys = true }
         val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.coingecko.com/api/v3/")
+            .baseUrl(CRYPTO_URL)
             .client(okHttpClient)
             .addConverterFactory(json.asConverterFactory(contentType))
             .build()

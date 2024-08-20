@@ -14,7 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.FragmentCryptoDetailsBinding
-import com.example.cryptoviewerapp.model.CryptoCurrency
+import com.example.cryptoviewerapp.ulils.ERROR_MESSAGE
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -67,7 +67,7 @@ class CryptoDetailsFragment : Fragment() {
                     showLoadingState()
                 } else if (it.detailsCryptocurrency != null) {
                     showContentState()
-                } else if (!isInternetAvailable()){
+                } else if (!isInternetAvailable()) {
                     showErrorState()
                 }
             } ?: showErrorState()
@@ -79,11 +79,7 @@ class CryptoDetailsFragment : Fragment() {
             if (isInternetAvailable()) {
                 viewModel.getCryptoCurrenciesDetails(args.cryptoId)
             } else {
-                Snackbar.make(
-                    binding.root,
-                    "Произошла ошибка при загрузке",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                Snackbar.make(binding.root, ERROR_MESSAGE, Snackbar.LENGTH_LONG).show()
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }

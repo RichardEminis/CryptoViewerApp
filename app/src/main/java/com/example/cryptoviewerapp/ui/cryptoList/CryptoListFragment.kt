@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptoviewerapp.R
 import com.example.cryptoviewerapp.databinding.FragmentCryptoListBinding
 import com.example.cryptoviewerapp.model.CryptoCurrency
+import com.example.cryptoviewerapp.ulils.ERROR_MESSAGE
+import com.example.cryptoviewerapp.ulils.RUB_CURRENCY
+import com.example.cryptoviewerapp.ulils.USD_CURRENCY
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,10 +78,7 @@ class CryptoListFragment : Fragment() {
             if (isInternetAvailable()) {
                 viewModel.getCryptoCurrencies(viewModel.currentCurrency)
             } else {
-                Snackbar.make(binding.root,
-                    "Произошла ошибка при загрузке",
-                    Snackbar.LENGTH_LONG
-                ).show()
+                Snackbar.make(binding.root, ERROR_MESSAGE, Snackbar.LENGTH_LONG).show()
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }
@@ -88,11 +88,12 @@ class CryptoListFragment : Fragment() {
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
             when (checkedIds.firstOrNull()) {
                 R.id.chipUsd -> {
-                    viewModel.currentCurrency = "usd"
+                    viewModel.currentCurrency = USD_CURRENCY
                     viewModel.updateCache(viewModel.currentCurrency)
                 }
+
                 R.id.chipRub -> {
-                    viewModel.currentCurrency = "rub"
+                    viewModel.currentCurrency = RUB_CURRENCY
                     viewModel.updateCache(viewModel.currentCurrency)
                 }
             }

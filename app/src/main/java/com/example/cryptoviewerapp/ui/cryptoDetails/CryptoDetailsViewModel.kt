@@ -1,6 +1,5 @@
 package com.example.cryptoviewerapp.ui.cryptoDetails
 
-import ERROR_TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptoviewerapp.model.CryptoCurrencyDetails
 import com.example.cryptoviewerapp.repository.CryptoRepository
+import com.example.cryptoviewerapp.ulils.ERROR_TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject

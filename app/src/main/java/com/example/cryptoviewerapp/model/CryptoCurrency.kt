@@ -1,11 +1,11 @@
 package com.example.cryptoviewerapp.model
 
 import androidx.room.Dao
-import androidx.room.Query
 import androidx.room.Entity
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
+import androidx.room.Query
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

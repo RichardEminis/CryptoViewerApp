@@ -1,6 +1,5 @@
 package com.example.cryptoviewerapp.ui.cryptoList
 
-import ERROR_TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cryptoviewerapp.model.CryptoCurrency
 import com.example.cryptoviewerapp.repository.CryptoRepository
+import com.example.cryptoviewerapp.ulils.ERROR_TAG
+import com.example.cryptoviewerapp.ulils.USD_CURRENCY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,20 +25,17 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     val cryptoCurrencies: LiveData<CryptoUiState>
         get() = _cryptoUiState
 
-    var currentCurrency: String = "RUB"
+    var currentCurrency: String = USD_CURRENCY
 
     init {
         getCryptoCurrencies(currentCurrency)
     }
 
     fun getCryptoCurrencies(currency: String) {
-        Log.d("CryptoViewModel", "Currency changed to: $currency")
         _cryptoUiState.value = cryptoCurrencies.value?.copy(isLoading = true)
 
-
-
         viewModelScope.launch {
-            if (repository.getCurrenciesFromCache().isEmpty()){
+            if (repository.getCurrenciesFromCache().isEmpty()) {
                 val response = repository.getCryptoCurrencies(currency)
                 _cryptoUiState.value =
                     cryptoCurrencies.value?.copy(cryptocurrency = response, isLoading = false)
@@ -45,10 +43,13 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
                 try {
                     val cachedCategories = repository.getCurrenciesFromCache()
                     _cryptoUiState.value =
-                        cryptoCurrencies.value?.copy(cryptocurrency = cachedCategories, isLoading = false)
+                        cryptoCurrencies.value?.copy(
+                            cryptocurrency = cachedCategories,
+                            isLoading = false
+                        )
 
                     repository.saveCurrenciesToCache(cachedCategories)
-                } catch (e:Exception){
+                } catch (e: Exception) {
                     Log.e(ERROR_TAG, e.toString())
                     _cryptoUiState.value =
                         cryptoCurrencies.value?.copy(isLoading = true)
@@ -58,13 +59,12 @@ class CryptoViewModel @Inject constructor(private val repository: CryptoReposito
     }
 
     fun updateCache(currency: String) {
-        Log.d("CryptoViewModel", "Currency changed to: $currency")
         _cryptoUiState.value = cryptoCurrencies.value?.copy(isLoading = true)
 
         viewModelScope.launch {
-                val response = repository.getCryptoCurrencies(currency)
-                _cryptoUiState.value =
-                    cryptoCurrencies.value?.copy(cryptocurrency = response, isLoading = false)
+            val response = repository.getCryptoCurrencies(currency)
+            _cryptoUiState.value =
+                cryptoCurrencies.value?.copy(cryptocurrency = response, isLoading = false)
         }
     }
 }
