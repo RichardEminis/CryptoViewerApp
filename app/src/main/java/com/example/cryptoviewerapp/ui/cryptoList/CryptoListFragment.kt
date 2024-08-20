@@ -78,7 +78,9 @@ class CryptoListFragment : Fragment() {
             if (isInternetAvailable()) {
                 viewModel.getCryptoCurrencies(viewModel.currentCurrency)
             } else {
-                Snackbar.make(binding.root, ERROR_MESSAGE, Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.root, ERROR_MESSAGE, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(requireContext().getColor(R.color.crypto_percent_text_color_red))
+                    .show()
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }
